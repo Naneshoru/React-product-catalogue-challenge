@@ -1,5 +1,4 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import { borderRadius } from "@mui/system";
 
 import MainLayout from "../layouts/Main";
 
@@ -8,7 +7,6 @@ import { useCatalog } from "../models/Catalog";
 
 function CatalogPage() {
   const { catalog } = useCatalog();
-  console.log(catalog)
  
   const { cart, addToCart } = useCart();
 
@@ -27,19 +25,30 @@ function CatalogPage() {
       footerLabel={`${cartTotal} (${cartNItems} itens)`}
     >
       <Box sx={{ p: 2, flex: 1 }}>
-        {/* <Typography variant="h6" fontWeight="bold">{{}}</Typography> */}
-        
         <Grid container>
           {catalog.products.map((elem, index) => (
-            <Grid item md={3} px={2} py={1}>
-              <Box sx={{ p: 2, mt: 2, 
-                height: "180px", 
-                // background: `url(${elem.imageUrl})`,
+            <Grid item md={3} px={2} py={1} key={elem.id}>
+              <Box sx={{ 
+                p: 1, mt: 2, 
+                display: "flex",
+                justifyContent: "flex-end",
                 backgroundColor: "#CECFD1",
-                borderRadius: "10px 10px 0 0"}} >
+                borderRadius: "10px 10px 0 0",
+                height: "180px", 
+              }}>
+                {/*console.log(elem.imageUrl)*/}
+                <Box sx={{
+                  px: 1,
+                  fontSize: 14,
+                  backgroundColor: "primary.main",
+                  borderRadius: "40px",
+                  color: "white",
+                  alignSelf: "flex-end",
+                }}>R$ {elem.price}
+                </Box>
               </Box>
-              <Paper sx={{ p:1, borderRadius: "0 0 10px 10px", height: "60px" }}>
-                <Typography variant="body2">{elem.name}</Typography>
+              <Paper sx={{ p:1, borderRadius: "0 0 10px 10px", height: "60px", boxShadow: 1 }}>
+                <Typography fontSize={12} fontWeight="medium">{elem.name}</Typography>
               </Paper>
             </Grid> 
           ))}
