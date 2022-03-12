@@ -15,9 +15,9 @@ function CatalogPage() {
   const cartNItems = cart.items.length;
   const cartTotal = `R$ ${cart.total.toFixed(2)}`;
 
-  // const handleClick = () => {
-  //   addToCart()
-  // }
+  const handleClick = (item) => {
+    addToCart(item)
+  }
 
   return (
     <MainLayout
@@ -27,7 +27,7 @@ function CatalogPage() {
       <Box sx={{ p: 2, flex: 1 }}>
         <Grid container>
           {catalog.products.map((elem, index) => (
-            <Grid item md={3} px={2} py={1} key={elem.id}>
+            <Grid item md={3} px={2} py={1} key={elem.id} onClick={(() => {handleClick(elem)})}>
               <Box sx={{ 
                 p: 1, mt: 2, 
                 display: "flex",
@@ -35,7 +35,7 @@ function CatalogPage() {
                 backgroundColor: "#CECFD1",
                 borderRadius: "10px 10px 0 0",
                 height: "180px", 
-              }}>
+              }} >
                 {/*console.log(elem.imageUrl)*/}
                 <Box sx={{
                   px: 1,
