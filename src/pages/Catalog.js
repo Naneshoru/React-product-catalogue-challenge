@@ -11,7 +11,7 @@ function CatalogPage() {
   const { cart, addToCart } = useCart();
 
   const cartNItems = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  const cartTotal = `R$ ${cart.total.toFixed(2)}`;
+  const cartTotal = `R$ ${cart.total.toFixed(2).replace('.', ',')}`;
 
   const handleClick = (item) => addToCart(item)
 
@@ -53,7 +53,7 @@ function CatalogPage() {
                   borderRadius: "40px",
                   color: "white",
                   fontSize: 14,
-                }}>R$ {elem.price}
+                }}>R$ {elem.price.replace('.', ',')}
                 </Box>
               </Box>
               <Paper sx={{ p:1, borderRadius: "0 0 10px 10px", height: "60px", boxShadow: 1 }}>

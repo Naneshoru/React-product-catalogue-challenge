@@ -19,7 +19,7 @@ function MainLayout({ pageTitle, footerLabel, children }) {
           position: "fixed",
           left: "0",
           right: "0",
-          mx: "auto", // IE8+
+          mx: "auto",
           maxWidth: "inherit",
           width: "inherit"  
         }}
