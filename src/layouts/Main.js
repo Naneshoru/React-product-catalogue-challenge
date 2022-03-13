@@ -9,17 +9,14 @@ function MainLayout({ pageTitle, footerLabel, children }) {
         backgroundColor: "background.default",
         flexGrow: 1,
         display: "flex",
-        flexDirection: "column",
-        position: "relative"
+        flexDirection: "column"
       }}
       disableGutters
     >
       <AppBar 
         sx={{
-          position: "fixed",
-          left: "0",
-          right: "0",
-          mx: "auto",
+          left: "50%",
+          transform: "translate(-50%)",
           maxWidth: "inherit",
           width: "inherit"  
         }}
