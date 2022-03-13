@@ -5,14 +5,25 @@ function MainLayout({ pageTitle, footerLabel, children }) {
     <Container
       maxWidth="md"
       sx={{
+        py: 8,
         backgroundColor: "background.default",
         flexGrow: 1,
         display: "flex",
         flexDirection: "column",
+        position: "relative"
       }}
       disableGutters
     >
-      <AppBar position="static">
+      <AppBar 
+        sx={{
+          position: "fixed",
+          left: "0",
+          right: "0",
+          mx: "auto", // IE8+
+          maxWidth: "inherit",
+          width: "inherit"  
+        }}
+      >
         <Toolbar>
           <Typography variant="h6" component="div">
             {pageTitle}
@@ -31,6 +42,10 @@ function MainLayout({ pageTitle, footerLabel, children }) {
         color="primary.contrastText"
         height="56px"
         boxShadow="1"
+        position="fixed" 
+        maxWidth="inherit"
+        width="inherit"
+        bottom="0" 
       >
         <Typography variant="body1" component="div" fontWeight="500">
           {footerLabel}

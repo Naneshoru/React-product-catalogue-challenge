@@ -9,7 +9,7 @@ export const CartProvider = ({ children }) => {
     items.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
   
   const addToCart = (product) => {
-    const foundItem = items.find(e => e.name === product.name);
+    const foundItem = items.find(item => item.name === product.name);
 
     if (foundItem) {
       foundItem.quantity++;
