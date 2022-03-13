@@ -10,14 +10,10 @@ function CatalogPage() {
  
   const { cart, addToCart } = useCart();
 
-  console.log(cart)
-
-  const cartNItems = cart.items.length;
+  const cartNItems = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   const cartTotal = `R$ ${cart.total.toFixed(2)}`;
 
-  const handleClick = (item) => {
-    addToCart(item)
-  }
+  const handleClick = (item) => addToCart(item)
 
   return (
     <MainLayout
@@ -27,7 +23,7 @@ function CatalogPage() {
       <Box sx={{ p: 2, flex: 1 }}>
         <Grid container>
           {catalog.products.map((elem, index) => (
-            <Grid item md={3} px={2} py={1} key={elem.id} onClick={(() => {handleClick(elem)})}>
+            <Grid item md={3} px={2} py={1} key={elem.id} onClick={(() => handleClick(elem))}>
               <Box sx={{ 
                 p: 1, mt: 2, 
                 display: "flex",
