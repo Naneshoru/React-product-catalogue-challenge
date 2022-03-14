@@ -29,7 +29,7 @@ function CatalogPage() {
       pageTitle="Produtos"
       footerLabel={`${cartTotal} (${cartNItems} itens)`}
     >
-      <Box sx={{ p: 2, flex: 1 }}>
+      <Box sx={{ p: 2, pb: 4, flex: 1 }}>
         <Grid container>
           {catalog.products.map((elem, index) => (
             <Fragment key={elem.id}>
