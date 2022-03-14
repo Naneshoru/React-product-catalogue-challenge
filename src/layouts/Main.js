@@ -5,7 +5,7 @@ function MainLayout({ pageTitle, footerLabel, children }) {
     <Container
       maxWidth="md"
       sx={{
-        py: 8,
+        py: 4,
         backgroundColor: "background.default",
         flexGrow: 1,
         display: "flex",
@@ -22,7 +22,7 @@ function MainLayout({ pageTitle, footerLabel, children }) {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" component="div">
+          <Typography variant="h6" component="div" sx={{p: 2}}>
             {pageTitle}
           </Typography>
         </Toolbar>

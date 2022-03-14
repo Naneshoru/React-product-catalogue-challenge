@@ -18,7 +18,6 @@ export const CartProvider = ({ children }) => {
       product.quantity = 1;
       setItems([...items, product]);
     }
-    console.log(items)
   }
 
   return (
