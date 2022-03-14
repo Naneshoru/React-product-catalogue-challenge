@@ -44,7 +44,7 @@ function MainLayout({ pageTitle, footerLabel, children }) {
         width="inherit"
         bottom="0" 
       >
-        <Typography variant="body1" component="div" fontWeight="500">
+        <Typography data-testid="footer" variant="body1" component="div" fontWeight="500">
           {footerLabel}
         </Typography>
       </Box>
