@@ -1,11 +1,10 @@
 import { Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import { useCart } from '../models/Cart';
+import { formatCurrency, removeZerosCurrency } from '../utils/Functions';
 
 const GridCardItem = ({ item }) => {
 
-  const { formatCurrency, removeZerosCurrency } = useCart();
   return (
     <>
       <Box sx={{

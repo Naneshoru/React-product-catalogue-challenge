@@ -10,12 +10,6 @@ export const CartProvider = ({ children }) => {
 
   const getItemTotal = () => 
     items.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
-  
-  const removeZerosCurrency = (value) =>
-    value.replace(/,00/,  '')
-
-  const formatCurrency = (value) =>
-    `R$ ${Number(value).toFixed(2).replace('.', ',')}`
 
   const addToCart = (product) => {
     const filteredItems = items.filter(item => item.name !== product.name);
@@ -26,7 +20,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart: { items, total: getItemTotal() }, addToCart, getItemsQuantity, formatCurrency, removeZerosCurrency }}
+      value={{ cart: { items, total: getItemTotal() }, addToCart, getItemsQuantity }}
     >
       {children}
     </CartContext.Provider>
