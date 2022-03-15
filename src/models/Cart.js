@@ -5,6 +5,9 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
 
+  const getItemsQuantity = () => 
+    items.reduce((acc, item) => acc + item.quantity, 0);
+
   const getItemTotal = () => 
     items.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
   
