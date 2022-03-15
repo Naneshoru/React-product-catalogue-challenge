@@ -9,15 +9,10 @@ export const CartProvider = ({ children }) => {
     items.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
   
   const addToCart = (product) => {
-    const foundItem = items.find(item => item.name === product.name);
-
-    if (foundItem) {
-      foundItem.quantity++;
-      setItems([...items]);
-    } else {
-      product.quantity = 1;
-      setItems([...items, product]);
-    }
+    const filteredItems = items.filter(item => item.name !== product.name);
+  
+    product.quantity = product.quantity + 1 || 1;
+    setItems([...filteredItems, product]);
   }
 
   return (
