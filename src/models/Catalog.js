@@ -11,9 +11,9 @@ export const CatalogProvider = ({ children }) => {
     let productsInCategories = {};
     
     products.forEach((product) => {
-      const newField = textToVariableName(product.categoryName);
-      productsInCategories[newField] = productsInCategories[newField] || []
-      productsInCategories[newField].push(product);
+      const category = textToVariableName(product.categoryName);
+      productsInCategories[category] = productsInCategories[category] || []
+      productsInCategories[category].push(product);
     })
 
     return productsInCategories;
@@ -23,8 +23,11 @@ export const CatalogProvider = ({ children }) => {
     products: { categories: categorize(ExampleCatalog.products) },
   };
 
+  const getCategoriesList = () => 
+    Object.keys(catalog.products.categories);
+    
   return (
-    <CatalogContext.Provider value={{ catalog }}>
+    <CatalogContext.Provider value={{ catalog, getCategoriesList }}>
       {children}
     </CatalogContext.Provider>
   );
