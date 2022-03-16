@@ -15,6 +15,9 @@ const GridCardItem = ({ item }) => {
         height: "180px",
         backgroundColor: "#CECFD1",
         borderRadius: "10px 10px 0 0",
+        backgroundImage: "url(" + require(`../assets/${item?.imageUrl.split('./')[1]}`).default + ")",
+        backgroundPosition: 'center center no-repeat',
+        backgroundSize: 'cover', 
       }} >
         <Box sx={{
           visibility: item.quantity ? "visible" : "hidden",
