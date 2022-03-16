@@ -41,7 +41,7 @@ const GridCardItem = ({ item }) => {
         }}>{removeZerosCurrency(formatCurrency(item.price))}
         </Box>
       </Box>
-      <Paper sx={{ p:1, borderRadius: "0 0 10px 10px", height: "60px", boxShadow: 1 }}>
+      <Paper sx={{ p:1, borderRadius: "0 0 10px 10px", height: "60px", boxShadow: "2px 2px 16px 2px rgba(0, 0, 0, 0.1)" }}>
         <Typography fontSize={12} fontWeight="medium">{item.name}</Typography>
       </Paper>
     </>
