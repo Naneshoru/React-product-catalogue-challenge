@@ -28,23 +28,46 @@ describe('Catalog Page', () => {
                 "price": "5",
                 "categoryName": "Bebidas quentes"
               }
+            ],
+            'salgados': [
+              {
+                "id": "4cc21cb1-55f6-419d-874f-1bafda4e42c5",
+                "name": "Pão na chapa com requeijão",
+                "imageUrl": "./images/4cc21cb1-55f6-419d-874f-1bafda4e42c5.jpg",
+                "price": "8.5",
+                "categoryName": "Salgados"
+              }
             ]
           }
         },  
       },
-      getCategoriesList: jest.fn().mockImplementation(() => ["bebidas-quentes"])
+      getCategoriesList: jest.fn().mockImplementation(() => ["bebidas-quentes", 'salgados'])
     };
   });
 
-  it.only('should show the correct cart value and quantities after the click to add to cart', async () => {
+  it('should show the correct cart value and quantity after the click to add one item to cart', () => {
     render(<MockCatalogPageComponent />);
     
-    const productGridElement = screen.getByText(/Espresso pequeno/i)
+    const productGridElement = screen.getByText(/Espresso pequeno/i);
 
     userEvent.click(productGridElement);
 
+    const footerElement = screen.getByText(/R\$[\s\S]*(item|itens)/);
+   
+    expect(footerElement).toHaveTextContent(`R$ 5,00 (1 item)`);
+  })
+
+  it('should show the correct cart value and quantity after the click to add two items to cart', () => {
+    render(<MockCatalogPageComponent />);
+    
+    const productGridElement = screen.getByText(/Espresso pequeno/i);
+    const anotherProductGridElement = screen.getByText(/Pão na chapa com requeijão/i);
+
+    userEvent.click(productGridElement);
+    userEvent.click(anotherProductGridElement);
+
     const footerElement = screen.getByText(/R\$[\s\S]*(item|itens)/)
    
-    expect(footerElement).toHaveTextContent(`R$ 5,00 (1 itens)`)
+    expect(footerElement).toHaveTextContent(`R$ 13,50 (2 itens)`)
   })
 });
