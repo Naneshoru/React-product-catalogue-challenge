@@ -10,7 +10,7 @@ const GridCardItem = ({ item }) => {
   const handleClick = (item) => addToCart(item);
 
   return (
-    <Grid item md={3} px={2} py={1} key={item.id} component="div" onClick={(() => handleClick(item))}>
+    <Grid item xs={3}  key={item.id} component="div" onClick={(() => handleClick(item))}>
       <Box 
         sx={{
           display: "flex",
