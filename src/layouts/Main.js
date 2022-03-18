@@ -3,8 +3,8 @@ import { Box, AppBar, Toolbar, Typography, Container } from "@mui/material";
 function MainLayout({ pageTitle, footerLabel, children }) {
   return (
     <Container
-      maxWidth="md"
       sx={{
+        width: "950px",
         py: 4,
         backgroundColor: "background.default",
         flexGrow: 1,
@@ -22,7 +22,7 @@ function MainLayout({ pageTitle, footerLabel, children }) {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{p: 2}}>
+          <Typography variant="h6" component="div" sx={{p: 2}} fontSize='1.1em'>
             {pageTitle}
           </Typography>
         </Toolbar>

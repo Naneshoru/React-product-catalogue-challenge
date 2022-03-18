@@ -26,7 +26,7 @@ function CatalogPage() {
         <Grid container>
           {categories.map((category) => ( //cada category é só uma chave
             <Fragment key={category}>
-              <Typography variant="h6" component="div" sx={{px: 2, pt: 6, pb: 2, width: "100%", fontWeight: "bold"}}>
+              <Typography component="div" variant="h6" fontSize='1.1em' letterSpacing="0.02em" sx={{m: 2, mt: 5, width: "100%", fontWeight: "bold"}}>
                 {variableNameToText(category)}
               </Typography>
               {catalog?.products?.categories[category].map((item) => 
