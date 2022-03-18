@@ -1,41 +1,50 @@
 import CatalogPage from "./Catalog";
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { CatalogProvider } from "../models/Catalog";
+import { CatalogContext } from "../models/Catalog";
 import { CartProvider } from "../models/Cart";
 
-let catalog;
+let catalogValue;
+const MockCatalogPageComponent = () => (
+  // Mockando apenas o contexto do catalog
+  <CatalogContext.Provider value={ catalogValue }> 
+    <CartProvider >
+      <CatalogPage />
+    </CartProvider>
+  </CatalogContext.Provider>
+)
+
 describe('Catalog Page', () => {
   beforeEach(() => {
-    catalog = { products: [ 
-      {
-        "id": "6400c151-2bd6-4446-b0a5-4f1e33954051",
-        "name": "Espresso pequeno",
-        "imageUrl": "./images/6400c151-2bd6-4446-b0a5-4f1e33954051.jpg",
-        "price": "5",
-        "categoryName": "Bebidas quentes"
-      }
-    ]};
+    catalogValue = { 
+      catalog: { 
+        products: {
+          categories: {
+            'bebidas-quentes': [ 
+              {
+                "id": "6400c151-2bd6-4446-b0a5-4f1e33954051",
+                "name": "Espresso pequeno",
+                "imageUrl": "./images/6400c151-2bd6-4446-b0a5-4f1e33954051.jpg",
+                "price": "5",
+                "categoryName": "Bebidas quentes"
+              }
+            ]
+          }
+        },  
+      },
+      getCategoriesList: jest.fn().mockImplementation(() => ["bebidas-quentes"])
+    };
   });
 
-  it('should show the correct cart value and quantities after the click to add to cart', async () => {
-    const { getByText, getByTestId } = render(
-      <CatalogProvider value={{ catalog }}>
-          <CartProvider>
-            <CatalogPage  />
-          </CartProvider>
-      </CatalogProvider>
-    );
+  it.only('should show the correct cart value and quantities after the click to add to cart', async () => {
+    render(<MockCatalogPageComponent />);
     
-    const productGridElement = getByText(catalog?.products[0].name);
+    const productGridElement = screen.getByText(/Espresso pequeno/i)
 
     userEvent.click(productGridElement);
 
-    const footerElement = getByTestId('footer');
-    
-    const formattedPrice = Number(catalog?.products[0].price).toFixed(2).replace('.', ',');
-
-    expect(footerElement).toHaveTextContent(`R$ ${formattedPrice} (1 itens)`)
-    
+    const footerElement = screen.getByText(/R\$[\s\S]*(item|itens)/)
+   
+    expect(footerElement).toHaveTextContent(`R$ 5,00 (1 itens)`)
   })
 });
