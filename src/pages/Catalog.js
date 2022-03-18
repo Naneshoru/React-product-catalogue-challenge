@@ -6,7 +6,7 @@ import MainLayout from "../layouts/Main";
 
 import { useCart } from "../models/Cart";
 import { useCatalog } from "../models/Catalog";
-import { formatCurrency, variableNameToText } from "../utils/Functions";
+import { formatCurrency, itemOrItens, variableNameToText } from "../utils/Functions";
 
 function CatalogPage() {
   const { catalog, getCategoriesList } = useCatalog();
@@ -20,7 +20,7 @@ function CatalogPage() {
   return (
     <MainLayout
       pageTitle="Produtos"
-      footerLabel={`${cartTotal} (${cartNItems} itens)`}
+      footerLabel={`${cartTotal} (${cartNItems} ${itemOrItens(cartNItems)})`}
     >
       <Box sx={{ p: 2, pb: 4, flex: 1 }}>
         <Grid container>

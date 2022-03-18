@@ -22,3 +22,7 @@ export function removeZerosCurrency(value) {
 export function formatCurrency(value) {
   return `R$ ${Number(value).toFixed(2).replace('.', ',')}`
 }
+
+export function itemOrItens(quantity) {
+  return quantity === 1 ? 'item' : 'itens';
+}
