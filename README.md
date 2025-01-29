@@ -1,5 +1,5 @@
 # Desafio de React
-
+ 
 ## Apresentação
 Neste desafio você deve implementar uma página de catálogo de produtos baseado em uma especificação 
 de design. Além disso, deve implementar a lógica de ao clicar num produto do catálogo adicioná-lo ao carrinho. Após adicionar o produto no carrinho, o número de itens e o total do carrinho devem ser refletidos no footer da aplicação. Para finalizar, escreva um teste automatizado para garantir que o clique no produto realmente altera o estado do carrinho.
