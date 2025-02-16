@@ -1,73 +1,102 @@
+import { fireEvent, render, screen } from "@testing-library/react";
 import CatalogPage from "./Catalog";
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { CatalogContext } from "../models/Catalog";
+import { CatalogProvider } from "../models/Catalog";
 import { CartProvider } from "../models/Cart";
 
-let catalogValue;
-const MockCatalogPageComponent = () => (
-  // Mockando apenas o contexto do catalog
-  <CatalogContext.Provider value={ catalogValue }> 
-    <CartProvider >
+const SampleApp = () => (
+  <CatalogProvider>
+    <CartProvider>
       <CatalogPage />
     </CartProvider>
-  </CatalogContext.Provider>
+  </CatalogProvider>
 )
 
-describe('Catalog Page', () => {
-  beforeEach(() => {
-    catalogValue = { 
-      catalog: { 
-        products: {
-          categories: {
-            'bebidas-quentes': [ 
-              {
-                "id": "6400c151-2bd6-4446-b0a5-4f1e33954051",
-                "name": "Espresso pequeno",
-                "imageUrl": "./images/6400c151-2bd6-4446-b0a5-4f1e33954051.jpg",
-                "price": "5",
-                "categoryName": "Bebidas quentes"
-              }
-            ],
-            'salgados': [
-              {
-                "id": "4cc21cb1-55f6-419d-874f-1bafda4e42c5",
-                "name": "Pão na chapa com requeijão",
-                "imageUrl": "./images/4cc21cb1-55f6-419d-874f-1bafda4e42c5.jpg",
-                "price": "8.5",
-                "categoryName": "Salgados"
-              }
-            ]
-          }
-        },  
-      },
-      getCategoriesList: jest.fn().mockImplementation(() => ["bebidas-quentes", 'salgados'])
-    };
+describe('Testar o funcionamento do carrinho e adição de itens', () => {
+  it('Deve exibir a contagem do valor e quantidade do carrinho vazio ao iniciar a aplicação', () => {
+    // const { container } = render(<SampleApp />);
+    // logRoles(container)
+    render(<SampleApp />);
+    const total = screen.getByText(/R\$ 0,00 \(0 itens\)/)
+    expect(total).toBeInTheDocument()
+  });
+  it('Deve adicionar um item 2x ao carrinho e exibir a quantidade e valor correto', () => {
+    render(<SampleApp />);
+    const itemName = "Espresso pequeno";
+    const itemPrice = 5;
+    let itemCount = 0;
+    let totalPrice = 0;
+ 
+    const elem = screen.getByText(new RegExp(itemName, "i"));
+
+    fireEvent.click(elem);
+    itemCount += 1;
+    totalPrice += itemPrice;
+
+    let total = screen.getByText(new RegExp(`R\\$ ${totalPrice.toFixed(2).replace('.', ',')} \\(${itemCount} item\\)`));
+    expect(total).toBeInTheDocument();
+
+    fireEvent.click(elem);
+    itemCount += 1;
+    totalPrice += itemPrice;
+
+    total = screen.getByText(new RegExp(`R\\$ ${totalPrice.toFixed(2).replace('.', ',')} \\(${itemCount} itens\\)`));
+    expect(total).toBeInTheDocument();
+  });
+  it('Deve adicionar dois itens diferentes ao carrinho e exibir a quantidade e valor correto', () => {
+    render(<SampleApp />);
+    const itemName = "Espresso pequeno";
+    const itemPrice = 5;
+    let itemCount = 0;
+    let totalPrice = 0;
+
+    const elem = screen.getByText(new RegExp(itemName, "i"));
+
+    fireEvent.click(elem);
+    itemCount += 1;
+    totalPrice += itemPrice;
+
+    let total = screen.getByText(new RegExp(`R\\$ ${totalPrice.toFixed(2).replace('.', ',')} \\(${itemCount} item\\)`)); 
+    expect(total).toBeInTheDocument();
+
+    const itemName2 = "Pão na chapa com requeijão";
+    const itemPrice2 = 8.5;
+
+    const elem2 = screen.getByText(new RegExp(itemName2, "i"));
+    fireEvent.click(elem2);
+    itemCount += 1;
+    totalPrice += itemPrice2;
+    let total2 = screen.getByText(new RegExp(`R\\$ ${totalPrice.toFixed(2).replace('.', ',')} \\(${itemCount} itens\\)`));
+    expect(total2).toBeInTheDocument();
   });
 
-  it('should show the correct cart value and quantity after the click to add one item to cart', () => {
-    render(<MockCatalogPageComponent />);
-    
-    const productGridElement = screen.getByText(/Espresso pequeno/i);
+  it('Deve adicionar dez itens, com dois tipos diferentes ao carrinho e exibir a quantidade e valor correto', () => {
+    render(<SampleApp />);
+    const itemName = "Espresso pequeno";
+    const itemPrice = 5;
+    let itemCount = 0;
+    let totalPrice = 0;
 
-    userEvent.click(productGridElement);
+    const elem = screen.getByText(new RegExp(itemName, "i"));
 
-    const footerElement = screen.getByText(/R\$[\s\S]*(item|itens)/);
-   
-    expect(footerElement).toHaveTextContent(`R$ 5,00 (1 item)`);
-  })
+    for(let i = 0; i < 5; i++) {
+      fireEvent.click(elem);
+      itemCount += 1;
+      totalPrice += itemPrice;
+    }
 
-  it('should show the correct cart value and quantity after the click to add two items to cart', () => {
-    render(<MockCatalogPageComponent />);
-    
-    const productGridElement = screen.getByText(/Espresso pequeno/i);
-    const anotherProductGridElement = screen.getByText(/Pão na chapa com requeijão/i);
+    let total = screen.getByText(new RegExp(`R\\$ ${totalPrice.toFixed(2).replace('.', ',')} \\(${itemCount} itens\\)`)); 
+    expect(total).toBeInTheDocument();
 
-    userEvent.click(productGridElement);
-    userEvent.click(anotherProductGridElement);
+    const itemName2 = "Pão na chapa com requeijão";
+    const itemPrice2 = 8.5;
 
-    const footerElement = screen.getByText(/R\$[\s\S]*(item|itens)/)
-   
-    expect(footerElement).toHaveTextContent(`R$ 13,50 (2 itens)`)
-  })
-});
+    for(let i = 0; i < 5; i++) {
+      const elem2 = screen.getByText(new RegExp(itemName2, "i"));
+      fireEvent.click(elem2);
+      itemCount += 1;
+      totalPrice += itemPrice2;
+    }
+    let total2 = screen.getByText(new RegExp(`R\\$ ${totalPrice.toFixed(2).replace('.', ',')} \\(${itemCount} itens\\)`));
+    expect(total2).toBeInTheDocument();
+  });
+})

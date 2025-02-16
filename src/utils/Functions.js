@@ -1,5 +1,5 @@
 export function sortByField(array, field) {
-  array.sort((a, b) => {
+  return array.sort((a, b) => {
     const x = a[field].toString().toLowerCase() || '';
     const y = b[field].toString().toLowerCase() || '';
     

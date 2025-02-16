@@ -24,7 +24,7 @@ function CatalogPage() {
     >
       <Box sx={{ p: 2, pb: 4, flex: 1 }}>
         <Grid container>
-          {categories.map((category) => ( //cada category é só uma chave
+          {categories.map((category) => (
             <Fragment key={category}>
               <Typography component="div" variant="h6" fontSize='1.1em' letterSpacing="0.02em" sx={{m: 2, mt: 5, width: "100%", fontWeight: "bold"}}>
                 {variableNameToText(category)}
