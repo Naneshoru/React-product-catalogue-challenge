@@ -9,7 +9,7 @@ const GridCardItem = ({ item }) => {
 
   const handleClick = (item) => addToCart(item);
 
-  const imageUrl = require(`../assets/${item?.imageUrl.split('./')[1]}`);
+  // const imageUrl = !item?.imageUrl.startsWith('https') ? require(`../assets/${item?.imageUrl.split('./')[1]}`) : '';
 
   return (
     <Grid item xs={3}  key={item.id} component="div" onClick={(() => handleClick(item))}>
@@ -22,7 +22,7 @@ const GridCardItem = ({ item }) => {
           height: "180px",
           backgroundColor: "#CECFD1",
           borderRadius: "10px 10px 0 0",
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `url(${item.imageUrl})`,
           backgroundPosition: 'center center no-repeat',
           backgroundSize: 'cover',
           cursor: "pointer"
