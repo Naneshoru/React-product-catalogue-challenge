@@ -15,12 +15,12 @@ export function variableNameToText(variableName) {
   return (variableName.charAt(0).toUpperCase() + variableName.substr(1).toLowerCase()).replace('-', ' ')
 }
 
-export function removeZerosCurrency(value) {
-  return value.replace(/,00|.00/,  '')
-}
-
 export function formatCurrency(value) {
   return `R$ ${Number(value).toFixed(2).replace('.', ',')}`
+}
+
+export function removeZerosCurrency(value) {
+  return value.replace(/,00|.00/,  '')
 }
 
 export function itemOrItens(quantity) {
