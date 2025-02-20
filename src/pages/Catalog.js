@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import GridCardItem from "../components/GridCardItem";
 
 import MainLayout from "../layouts/Main";
@@ -9,13 +9,17 @@ import { useCatalog } from "../models/Catalog";
 import { formatCurrency, itemOrItens, variableNameToText } from "../utils/Functions";
 
 function CatalogPage() {
-  const { catalog, getCategoriesList } = useCatalog();
+  const { catalog, getCatalog, getCategoriesList } = useCatalog();
   const { cart, getItemsQuantity } = useCart();
 
   const cartNItems = getItemsQuantity();
   const cartTotal = formatCurrency(cart?.total);
 
   const categories = getCategoriesList();
+
+  useEffect(() => {
+    getCatalog().catch(err => console.log(err));
+  }, [getCatalog]);
 
   return (
     <MainLayout
@@ -24,12 +28,12 @@ function CatalogPage() {
     >
       <Box sx={{ p: 2, pb: 4, flex: 1 }}>
         <Grid container>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Fragment key={category}>
               <Typography component="div" variant="h6" fontSize='1.1em' letterSpacing="0.02em" sx={{m: 2, mt: 5, width: "100%", fontWeight: "bold"}}>
                 {variableNameToText(category)}
               </Typography>
-              {catalog?.products?.categories[category].map((item) => 
+              {catalog?.products?.categories?.[category]?.map((item) => 
                 <GridCardItem item={item} key={item.name} />
               )}
             </Fragment>

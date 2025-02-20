@@ -1,6 +1,13 @@
 {
   "products": [
     {
+      "id": "6400c151-2bd6-4446-b0a5-4f1e33954051",
+      "name": "Espresso pequeno",
+      "imageUrl": "https://imgur.com/YrAXihG.jpeg",
+      "price": "5",
+      "categoryName": "Bebidas quentes"
+    },
+    {
       "id": "6a84952b-1111-43be-bc3c-0823466c0363",
       "name": "Mochaccino",
       "imageUrl": "https://imgur.com/y49ZJEa.jpeg",
