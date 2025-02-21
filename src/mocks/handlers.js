@@ -1,11 +1,11 @@
 // import { http, HttpResponse } from 'msw'
-import ExampleCatalog2 from '../assets/ExampleCatalog2.json'
+import ExampleCatalog from '../assets/ExampleCatalog.json'
 import categorize from '../models/Catalog'
 
 import { rest } from 'msw'
 
 const data = {
-  products: { categories: categorize(ExampleCatalog2.products) },
+  products: { categories: categorize(ExampleCatalog.products) },
 }
 
 export const handlers = [

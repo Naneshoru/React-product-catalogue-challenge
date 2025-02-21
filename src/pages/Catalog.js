@@ -1,12 +1,14 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { Fragment, useEffect } from "react";
+import { Fragment, lazy, Suspense, useEffect } from "react";
 import GridCardItem from "../components/GridCardItem";
+import { v4 as uuidv4 } from 'uuid'
 
 import MainLayout from "../layouts/Main";
 
 import { useCart } from "../models/Cart";
 import { useCatalog } from "../models/Catalog";
 import { formatCurrency, itemOrItens, variableNameToText } from "../utils/Functions";
+import GridCardItemLazy from "../components/GridCardItemLazy";
 
 function CatalogPage() {
   const { catalog, getCatalog, getCategoriesList } = useCatalog();
@@ -19,7 +21,14 @@ function CatalogPage() {
 
   useEffect(() => {
     getCatalog().catch(err => console.log(err));
-  }, [getCatalog]);
+  }, []);
+
+  const skeletonCategory = Array.from({ length: 8 }, () => ({
+    name: "",
+    imageUrl: "",
+    price: "0",
+    categoryName: ""
+  }));
 
   return (
     <MainLayout
@@ -28,19 +37,27 @@ function CatalogPage() {
     >
       <Box sx={{ p: 2, pb: 4, flex: 1 }}>
         <Grid container>
-          {categories?.map((category) => (
-            <Fragment key={category}>
-              <Typography component="div" variant="h6" fontSize='1.1em' letterSpacing="0.02em" sx={{m: 2, mt: 5, width: "100%", fontWeight: "bold"}}>
-                {variableNameToText(category)}
-              </Typography>
-              {catalog?.products?.categories?.[category]?.map((item) => 
-                <GridCardItem item={item} key={item.name} />
-              )}
+          {categories 
+            ? categories?.map((category, i) => {
+                const singleCategory = catalog?.products?.categories?.[category]
+                
+                return (
+                <Fragment key={category}>
+                  <Typography component="div" variant="h6" fontSize='1.1em' letterSpacing="0.02em" sx={{m: 2, mt: 5, width: "100%", fontWeight: "bold"}}>
+                    {variableNameToText(category)}
+                  </Typography>
+                  {singleCategory?.map((item) => <Fragment key={uuidv4()}>
+                    <GridCardItemLazy item={item} />
+                  </Fragment>
+                  )}
+                </Fragment>
+              )})
+            : skeletonCategory.map((item) => <Fragment key={uuidv4()}>
+              <GridCardItemLazy item={item} />
             </Fragment>
-          ))}
+          )}
         </Grid>
       </Box>
-      
     </MainLayout>
   );
 }

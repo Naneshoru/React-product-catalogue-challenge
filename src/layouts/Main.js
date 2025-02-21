@@ -9,7 +9,8 @@ function MainLayout({ pageTitle, footerLabel, children }) {
         backgroundColor: "background.default",
         flexGrow: 1,
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        minHeight: "100vh"
       }}
       disableGutters
     >

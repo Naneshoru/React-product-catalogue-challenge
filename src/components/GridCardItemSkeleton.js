@@ -1,26 +1,18 @@
-import { Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import { useCart } from '../models/Cart';
-import { formatCurrency, removeZerosCurrency } from '../utils/Functions';
 
-const GridCardItem = ({ item }) => {
-  const { addToCart } = useCart();
-
-  const handleClick = (item) => addToCart(item);
-
-  const imageUrl = item.imageUrl ? item.imageUrl : require('../assets/images/empty-image-300x240.jpg').default;
-
+const GridCardItemSkeleton = () => {
+  const imageUrl = '../assets/images/empty-image-300x240.jpg'
   return (
-    <div onClick={() => handleClick(item)}>
+    <div>
       <Box 
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           p: 1, m: 2, mb: 0,
-          height: "220px",
-          // width: "100%",
+          height: "180px",
           backgroundColor: "#CECFD1",
           borderRadius: "10px 10px 0 0",
           backgroundImage: `url(${imageUrl})`,
@@ -32,7 +24,7 @@ const GridCardItem = ({ item }) => {
       >
         <Box 
           sx={{
-            visibility: item.quantity ? "visible" : "hidden",
+            visibility: "hidden",
             alignSelf: "flex-end",
             display: "flex", justifyContent: "center", alignItems: "center",
             height: "40px", width: "40px",
@@ -42,7 +34,6 @@ const GridCardItem = ({ item }) => {
             fontSize: 16,
           }}
         >
-          {item.quantity}
         </Box>
         <Box 
           sx={{
@@ -53,17 +44,14 @@ const GridCardItem = ({ item }) => {
             color: "white",
             fontSize: 14,
           }}
-        >{removeZerosCurrency(formatCurrency(item.price))}
+        >
         </Box>
       </Box>
       <Paper component="div"
         sx={{ p:1, m: 2, mt: 0, borderRadius: "0 0 10px 10px", height: "50px", boxShadow: "2px 2px 16px 2px rgba(0, 0, 0, 0.1)", cursor: "pointer" }} >
-        <Typography fontSize={12} fontWeight="medium" >
-          {item.name}
-        </Typography>
-      </Paper>      
+      </Paper>
     </div>
   )
 }
 
-export default GridCardItem;
+export default GridCardItemSkeleton;

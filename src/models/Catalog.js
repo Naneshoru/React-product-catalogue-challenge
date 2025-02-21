@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { textToVariableName } from "../utils/Functions";
-import ExampleCatalog2 from '../assets/ExampleCatalog2.json'
+import ExampleCatalog from '../assets/ExampleCatalog.json'
 
 export const CatalogContext = createContext();
 
@@ -15,7 +15,7 @@ export const CatalogProvider = ({ children }) => {
         throw new Error('Network response was not ok');
       }
       const data = {
-        products: { categories: categorize(ExampleCatalog2.products) },
+        products: { categories: categorize(ExampleCatalog.products) },
       }
       setCatalog(data);
     } catch (error) {
@@ -24,7 +24,19 @@ export const CatalogProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getCatalog();
+    let isMounted = true;
+
+    const fetchCatalog = async () => {
+      if (isMounted) {
+        await getCatalog();
+      }
+    };
+
+    fetchCatalog();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const getCategoriesList = () => 

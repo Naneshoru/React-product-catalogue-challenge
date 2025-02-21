@@ -100,7 +100,7 @@ describe('Testar o funcionamento do carrinho e adição de itens', () => {
     expect(total2).toBeInTheDocument();
   });
 
-  it('Deve fazer a request para o catálogo e popular a página', async () => {
+  it('Deve fazer a request para o catálogo e popular a página com as imagens', async () => {
     render(<SampleApp />)
     const elements = await screen.findAllByText(/R\$/);
     expect(elements.length).toBeGreaterThan(0);
@@ -109,5 +109,8 @@ describe('Testar o funcionamento do carrinho e adição de itens', () => {
     const parentElement = element.closest('.MuiBox-root');
 
     expect(parentElement).toHaveStyle(`background-image: url`)
+
+    expect(parentElement).not.toHaveStyle(`background-image: url("../assets/images/empty-image-300x240.jpg")`)
+
   })
 })
