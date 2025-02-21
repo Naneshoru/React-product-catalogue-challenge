@@ -9,15 +9,20 @@ export const CatalogProvider = ({ children }) => {
 
   const getCatalog = async () => {
     try {
-      console.log('Fetching catalog...');
-      const response = await fetch('/catalog');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      console.log('Fake Fetching catalog...');
+      // const response = await fetch('/catalog');
+      // if (!response.ok) {
+      //   throw new Error('Network response was not ok');
+      // }
+      
       const data = {
         products: { categories: categorize(ExampleCatalog.products) },
       }
-      setCatalog(data);
+
+      setTimeout(() => 
+        new Promise((res, rej) => 
+          res(data)).then((res) => setCatalog(res))
+      , 1000)
     } catch (error) {
       console.error('Failed to fetch catalog:', error);
     }
