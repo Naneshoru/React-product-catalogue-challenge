@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { textToVariableName } from "../utils/Functions";
 import ExampleCatalog from '../assets/ExampleCatalog.json'
 
@@ -6,7 +6,18 @@ export const CatalogContext = createContext();
 
 export const CatalogProvider = ({ children }) => {
   const [catalog, setCatalog] = useState(null);
-
+  function categorize(products) {
+    let productsInCategories = {};
+    
+    products.forEach((product) => {
+      const category = textToVariableName(product.categoryName);
+      productsInCategories[category] = productsInCategories[category] || []
+      productsInCategories[category].push(product);
+    });
+  
+    return productsInCategories;
+  }
+  
   const getCatalog = async () => {
     try {
       console.log('Fake Fetching catalog...');
@@ -28,22 +39,6 @@ export const CatalogProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchCatalog = async () => {
-      if (isMounted) {
-        await getCatalog();
-      }
-    };
-
-    fetchCatalog();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
   const getCategoriesList = () => 
     catalog?.products?.categories &&
     Object.keys(catalog?.products?.categories);
@@ -57,16 +52,4 @@ export const CatalogProvider = ({ children }) => {
 
 export function useCatalog() {
   return useContext(CatalogContext);
-}
-
-export default function categorize(products) {
-  let productsInCategories = {};
-  
-  products.forEach((product) => {
-    const category = textToVariableName(product.categoryName);
-    productsInCategories[category] = productsInCategories[category] || []
-    productsInCategories[category].push(product);
-  });
-
-  return productsInCategories;
 }

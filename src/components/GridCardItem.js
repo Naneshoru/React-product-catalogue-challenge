@@ -1,13 +1,16 @@
-import { Grid, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { useCart } from '../models/Cart';
 import { formatCurrency, removeZerosCurrency } from '../utils/Functions';
 
-const GridCardItem = ({ item }) => {
+const GridCardItem = memo(function GridCardItem ({ item }) {
   const { addToCart } = useCart();
 
-  const handleClick = (item) => addToCart(item);
+  const handleClick = useCallback((item => {
+    console.log('Adding to cart:', item);
+    addToCart(item)
+  }), [addToCart])
 
   const imageUrl = item.imageUrl ? item.imageUrl : require('../assets/images/empty-image-300x240.jpg').default;
 
@@ -19,8 +22,7 @@ const GridCardItem = ({ item }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           p: 1, m: 2, mb: 0,
-          height: "220px",
-          // width: "100%",
+          height: "180px",
           backgroundColor: "#CECFD1",
           borderRadius: "10px 10px 0 0",
           backgroundImage: `url(${imageUrl})`,
@@ -64,6 +66,6 @@ const GridCardItem = ({ item }) => {
       </Paper>      
     </div>
   )
-}
+})
 
 export default GridCardItem;

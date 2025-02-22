@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useRef } from 'react';
+import React, { lazy, Suspense, useRef, memo } from 'react';
 import LazyLoad from './LazyLoad';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './ErrorFallback';
@@ -7,7 +7,7 @@ import { Grid } from '@mui/material';
 
 const CardLazy = lazy(() => import('./GridCardItem'));
 
-export default function GridCardItemLazy({ item }) {
+const GridCardItemLazy = memo(function GridCardItemLazy({ item }) {
   const ref = useRef(null);
   const log = (error, info) => {
     console.log(`${error} ${info}`);
@@ -30,4 +30,6 @@ export default function GridCardItemLazy({ item }) {
       </ErrorBoundary>
     </LazyLoad>
   );
-}
+});
+
+export default GridCardItemLazy;

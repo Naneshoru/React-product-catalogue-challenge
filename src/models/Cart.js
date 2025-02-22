@@ -3,15 +3,17 @@ import React, { createContext, useContext, useState } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [items, setItems] = useState(null);
+  const [cart, setItems] = useState(null);
 
   const getItemsQuantity = () => 
-    items?.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
+    cart?.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
 
   const getItemTotal = () => 
-    items?.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0) ?? 0; 
+    cart?.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0) ?? 0; 
 
   const addToCart = (product) => {
+    console.log('[PROVIDER]:', product);
+
     setItems(prev => {
       if (prev) {
         const productFound = prev.find((item) => item.name === product.name)
@@ -33,7 +35,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart: { items, total: getItemTotal() }, addToCart, getItemsQuantity }}
+      value={{ cart, getItemTotal, addToCart, getItemsQuantity }}
     >
       {children}
     </CartContext.Provider>
